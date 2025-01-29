@@ -63,15 +63,11 @@ Steps
    GUILD_IDS=**SERVER ID**
    AUTHORIZED_USERS=**COPY USER ID IN DEVELOPER MODE**
 ```
-4. Load Commands
-```
-   node deploy-commands.js
-``` 
-5. Run the Bot
+4. Run the Bot
 ```
    node bot.js   
 ```
-6. Install Notification Table
+5. Install Notification Table
 ```
 	USE DISCORD_BOT
 GO
@@ -107,18 +103,18 @@ GO
 ALTER TABLE [dbo].[notifications] ADD  DEFAULT (getdate()) FOR [created_at]
 GO
 ```
-7. Modify Online Char
+6. Modify Online Char
 function.js - line 292
 ```
 const onlineQuery = 'SELECT COUNT(*) AS count FROM vPlus.._OnlinePlayers';  
 ```
-8. Modify Total Char
+7. Modify Total Char
 function.js - line 307
 ```
 const totalQuery = 'SELECT COUNT(*) AS count FROM SRO_VT_ACCOUNT..TB_User';  
 ```
 
-9. If you need to edit or see the commands you can find them in the commands folder with the following names:
+8. If you need to edit or see the commands you can find them in the commands folder with the following names:
 ```
 addgold.js
 checkgold.js
