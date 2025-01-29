@@ -1,0 +1,22 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@vitalets/google-translate-api": "^9.2.0",
+    "discord.js": "^14.16.1",
+    "dotenv": "^16.4.5",
+    "google-translate-api-x": "^10.7.1",
+    "mssql": "^11.0.1",
+    "mysql": "^2.18.1",
+    "puppeteer": "^23.3.0",
+    "winston": "^3.14.2"
+  }
+}
