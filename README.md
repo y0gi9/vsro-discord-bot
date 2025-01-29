@@ -37,8 +37,8 @@ Steps
 
 1. Clone the Repository
 ```
-   git clone <repository-url>
-   cd <project-directory>
+   git clone https://github.com/y0gi9/vsro-discord-bot.git
+   cd vsro-discord-bot
 ```
 2. Install Dependencies
 ```
