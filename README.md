@@ -172,14 +172,14 @@ VALUES (
 📂 Project Structure
 
 📦project-directory
- ┣ 📂commands         # Custom commands directory
- ┣ 📂handlers         # Command handler and interaction logic
- ┣ 📂utils            # Database and helper utilities
- ┣ 📜bot.js           # Main bot script
- ┣ 📜functions.js     # Notification and player tracking logic
- ┣ 📜deploy-commands.js # Script to deploy commands to Discord
- ┣ 📜.env             # Environment configuration (not included in the repo)
- ┗ 📜package.json     # Project metadata and dependencies
+ ┣ 📂commands         # Custom commands directory  
+ ┣ 📂handlers         # Command handler and interaction logic  
+ ┣ 📂utils            # Database and helper utilities  
+ ┣ 📜bot.js           # Main bot script  
+ ┣ 📜functions.js     # Notification and player tracking logic  
+ ┣ 📜deploy-commands.js # Script to deploy commands to Discord  
+ ┣ 📜.env             # Environment configuration (not included in the repo)  
+ ┗ 📜package.json     # Project metadata and dependencies  
 
 ---
 
