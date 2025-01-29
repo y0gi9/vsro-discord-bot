@@ -118,10 +118,12 @@ const totalQuery = 'SELECT COUNT(*) AS count FROM SRO_VT_ACCOUNT..TB_User';
 ```
 
 9. If you need to edit or see the commands you can find them in the commands folder with the following names:
-```addgold.js
+```
+addgold.js
 checkgold.js
 addsilk.js
-checksilk.js```
+checksilk.js
+```
 
 ---
 
