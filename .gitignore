@@ -1,4 +1,6 @@
 .env
 node_modules/
 bot.log
+package-lock.json
+
 

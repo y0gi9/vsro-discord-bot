@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const sql = require('mssql');
 const { getShardRequest } = require('../utils/database');
+const { checkPermission } = require('../utils/permissions');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,6 +13,7 @@ module.exports = {
                 .setRequired(true)),
 
     async execute(interaction, logger) {
+        if (!checkPermission(interaction)) return;
         try {
             const charName = interaction.options.getString('charname');
             await interaction.deferReply();

@@ -12,6 +12,7 @@ module.exports = {
                 .setRequired(true)),
 
     async execute(interaction, logger) {
+        if (!checkPermission(interaction)) return;
         try {
             const charName = interaction.options.getString('charname');
 
