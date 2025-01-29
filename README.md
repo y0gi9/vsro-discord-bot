@@ -171,7 +171,7 @@ VALUES (
 
 📂 Project Structure
 
-📦project-directory
+📦project-directory  
  ┣ 📂commands         # Custom commands directory  
  ┣ 📂handlers         # Command handler and interaction logic  
  ┣ 📂utils            # Database and helper utilities  
