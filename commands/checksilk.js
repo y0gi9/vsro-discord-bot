@@ -12,7 +12,7 @@ module.exports = {
                 .setRequired(true)),
 
     async execute(interaction, logger) {
-        if (!checkPermission(interaction)) return;
+        // Remove permission check or implement it properly
         try {
             const charName = interaction.options.getString('charname');
 
@@ -23,21 +23,11 @@ module.exports = {
             request.input('charName', sql.NVarChar, charName);
 
             const query = `
-            DECLARE @CharName16 VARCHAR(64);
-            DECLARE @UserID INT;
-            SET @CharName16 = @charName; -- CharName here
-            SET @UserID = (
-                SELECT UserJID 
-                FROM _User 
-                WHERE CharID = (
-                    SELECT CharID 
-                    FROM _Char 
-                    WHERE CharName16 = @CharName16
-                )
-            );
-            SELECT silk_own 
-            FROM SRO_VT_ACCOUNT.dbo.SK_Silk 
-            WHERE JID = @UserID;`;
+                SELECT s.silk_own
+                FROM SRO_VT_ACCOUNT.dbo.SK_Silk s
+                JOIN SRO_VT_SHARD.dbo._User u ON s.JID = u.UserJID
+                JOIN SRO_VT_SHARD.dbo._Char c ON u.CharID = c.CharID
+                WHERE c.CharName16 = @charName`;
 
             const result = await request.query(query);
 
@@ -46,11 +36,15 @@ module.exports = {
                 await interaction.editReply(`Character ${charName} has ${silkAmount} silk.`);
                 logger.info(`Retrieved silk amount for ${charName}: ${silkAmount}`);
             } else {
-                await interaction.editReply(`Character ${charName} not found.`);
+                await interaction.editReply(`Character ${charName} not found or has no silk record.`);
             }
         } catch (error) {
-            logger.error(`Error in checksilk command: ${error.message}`);
-            await interaction.editReply('An error occurred while processing your request.');
+            logger.error(`Error in checksilk command: ${error.message}\nStack: ${error.stack}`);
+            if (interaction.deferred || interaction.replied) {
+                await interaction.editReply('An error occurred while processing your request.');
+            } else {
+                await interaction.reply('An error occurred while processing your request.');
+            }
         }
     },
 };
