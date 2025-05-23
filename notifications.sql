@@ -11,6 +11,7 @@ GO
 CREATE TABLE [dbo].[notifications](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[type] [varchar](50) NOT NULL,
+	[title] [nvarchar](200) NULL,
 	[description] [text] NULL,
 	[image_url] [varchar](255) NULL,
 	[countdown_end] [datetime] NULL,
