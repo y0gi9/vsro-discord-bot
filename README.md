@@ -229,6 +229,8 @@ SQL Queries
 - Unhandled Errors:
   - Check the logs (`bot.log`) for detailed error messages and stack traces.
 
+- Invite Link
+https://discord.com/oauth2/authorize?client_id=BOT_ID&scope=bot%20applications.commands&permissions=8
 ---
 
 📜 License
